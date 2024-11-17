@@ -1,9 +1,7 @@
-<?php
-
-include_once("config/env/env_conf.php");
+<?php 
 
 header("Content-Type: application/json");
 
 echo json_encode([
-    'message' => 'Hello World'
+    "message" => "server running ok"
 ]);
