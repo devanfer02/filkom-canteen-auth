@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Admin;
 use App\Models\User;
 use App\Validations\AuthValidation;
 use Lib\JWT\JWTLib;
@@ -39,7 +40,7 @@ class AuthService
                     'message' => 'email address already in use'
                 ];                
             }
-            error_log("[USER SERVCIE][register] ERR: " . $e->getMessage());
+            error_log("[AUTH SERVICE][register] ERR: " . $e->getMessage());
             return [
                 'code' => 500,
                 'status' => 'error',
@@ -84,12 +85,56 @@ class AuthService
             ];
 
         } catch (\Exception $e) {
-            error_log("[USER SERVCIE][login] ERR: " . $e->getMessage());
+            error_log("[AUTH SERVICE][login] ERR: " . $e->getMessage());
             return [
                 'code' => 500,
                 'status' => 'error',
                 'message' => 'internal server error'
             ];
         }
+    }
+
+    public function adminLogin(array $data)
+    {
+        try {
+            $admin = Admin::where('email', '=', $data['email'])->first();
+
+            if(!isset($admin)) 
+            {
+                return [
+                    'code' => 400,
+                    'status' => 'fail',
+                    'message' => 'invalid email or password'
+                ];
+            }
+
+            if (!password_verify($data['password'], $admin->password))
+            {
+                return [
+                    'code' => 400,
+                    'status' => 'fail',
+                    'message' => 'invalid email or password'
+                ];
+            }
+
+            $token = JWTLib::createJWTToken($admin->admin_id);
+
+            return [
+                'code' => 200,
+                'status' => 'success',
+                'message' => 'successfully login to system',
+                'data' => [
+                    'token' => $token
+                ]
+            ];
+
+        } catch (\Exception $e) {
+            error_log("[AUTH SERVICE][login] ERR: " . $e->getMessage());
+            return [
+                'code' => 500,
+                'status' => 'error',
+                'message' => 'internal server error'
+            ];
+        }        
     }
 }

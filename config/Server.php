@@ -8,8 +8,9 @@ use App\Http\Utils\HTTPResponse;
 require_once("app/http/utils/Response.php");
 require_once("app/http/controllers/AuthController.php");
 require_once("app/services/AuthService.php");
-require_once("app/models/User.php");
 require_once("app/validations/AuthValidation.php");
+require_once("app/models/User.php");
+require_once("app/models/Admin.php");
 
 require_once("lib/jwt/jwt.php");
 
