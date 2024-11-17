@@ -3,15 +3,14 @@
 namespace App\Services;
 
 use App\Models\User;
-use App\Validations\UserValidation;
-use Illuminate\Database\QueryException;
+use App\Validations\AuthValidation;
 use Lib\JWT\JWTLib;
 
-class UserService 
+class AuthService 
 {
     public function register(array $data): array 
     {
-        $valid = UserValidation::validateRegisterForm($data);
+        $valid = AuthValidation::validateRegisterForm($data);
 
         if (!$valid['valid']) 
         {

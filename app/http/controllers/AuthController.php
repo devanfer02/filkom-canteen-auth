@@ -2,28 +2,28 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\UserService;
+use App\Services\AuthService;
 use App\Http\Utils\HTTPResponse;
 
-class UserController 
+class AuthController 
 {
-    private $userService;
+    private $AuthService;
 
     public function __construct()
     {
-        $this->userService = new UserService();
+        $this->AuthService = new AuthService();
     }
 
     public function register(array $data)
     {   
-        $resp = $this->userService->register($data);
+        $resp = $this->AuthService->register($data);
 
         HTTPResponse::send($resp['code'], $resp);
     }
 
     public function login(array $data)
     {
-        $resp = $this->userService->login($data);
+        $resp = $this->AuthService->login($data);
 
         HTTPResponse::send($resp['code'], $resp);
     }

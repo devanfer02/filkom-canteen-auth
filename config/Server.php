@@ -2,14 +2,14 @@
 
 namespace Config;
 
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\AuthController;
 use App\Http\Utils\HTTPResponse;
 
 require_once("app/http/utils/Response.php");
-require_once("app/http/controllers/UserController.php");
-require_once("app/services/UserService.php");
+require_once("app/http/controllers/AuthController.php");
+require_once("app/services/AuthService.php");
 require_once("app/models/User.php");
-require_once("app/validations/UserValidation.php");
+require_once("app/validations/AuthValidation.php");
 
 require_once("lib/jwt/jwt.php");
 
@@ -27,7 +27,7 @@ class Server
     public static function routing()
     {
         // controllers
-        $userCtr = new UserController();
+        $userCtr = new AuthController();
         Router::get('/health', function() {
             HTTPResponse::send(200, [
                 'message' => 'server is running ok!'

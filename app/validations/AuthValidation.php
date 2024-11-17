@@ -2,7 +2,7 @@
 
 namespace App\Validations;
 
-class UserValidation 
+class AuthValidation 
 {
     public static function validateRegisterForm(array $data): array 
     {
