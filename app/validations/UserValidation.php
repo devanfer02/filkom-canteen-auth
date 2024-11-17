@@ -25,11 +25,7 @@ class UserValidation
         return [
             'valid' => true,
             'message' => $key . ' should not be empty'
-        ];;
+        ];
     }
 
-    public function validateLoginForm()
-    {
-        
-    }
 }

@@ -11,6 +11,8 @@ require_once("app/services/UserService.php");
 require_once("app/models/User.php");
 require_once("app/validations/UserValidation.php");
 
+require_once("lib/jwt/jwt.php");
+
 class Server
 {
     public static function setup()
@@ -34,8 +36,16 @@ class Server
 
         Router::post('/auth/register', function() use($userCtr) {
             $jsonData = file_get_contents("php://input");
-            $data = json_decode($jsonData);
-            echo json_encode($data);
+            $data = json_decode($jsonData, true);
+            
+            $userCtr->register($data);
+        });
+
+        Router::post('/auth/login', function() use($userCtr) {
+            $jsonData = file_get_contents("php://input");
+            $data = json_decode($jsonData, true);
+            
+            $userCtr->login($data);
         });
     }
 

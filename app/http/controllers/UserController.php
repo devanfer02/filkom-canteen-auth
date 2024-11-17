@@ -20,4 +20,11 @@ class UserController
 
         HTTPResponse::send($resp['code'], $resp);
     }
+
+    public function login(array $data)
+    {
+        $resp = $this->userService->login($data);
+
+        HTTPResponse::send($resp['code'], $resp);
+    }
 }
