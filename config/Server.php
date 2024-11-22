@@ -4,8 +4,10 @@ namespace Config;
 
 use App\Http\Controllers\AuthController;
 use App\Http\Utils\HTTPResponse;
+use App\Http\Utils\Request;
 
 require_once("app/http/utils/Response.php");
+require_once("app/http/utils/Request.php");
 require_once("app/http/controllers/AuthController.php");
 require_once("app/services/AuthService.php");
 require_once("app/validations/AuthValidation.php");
@@ -36,17 +38,21 @@ class Server
         });
 
         Router::post('/auth/register', function() use($userCtr) {
-            $jsonData = file_get_contents("php://input");
-            $data = json_decode($jsonData, true);
+            $data = Request::getJsonData();
             
             $userCtr->register($data);
         });
 
         Router::post('/auth/login', function() use($userCtr) {
-            $jsonData = file_get_contents("php://input");
-            $data = json_decode($jsonData, true);
+            $data = Request::getJsonData();
             
             $userCtr->login($data);
+        });
+
+        Router::post('/auth/admin/login', function() use($userCtr) {
+            $data = Request::getJsonData();
+
+            $userCtr->login($data, 'Admin');
         });
     }
 

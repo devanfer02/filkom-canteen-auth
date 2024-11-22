@@ -50,10 +50,17 @@ class AuthService
 
     }   
 
-    public function login(array $data) 
+    public function login(array $data, string $mode) 
     {
         try {
-            $user = User::where('email', '=', $data['email'])->first();
+            if ($mode === 'User')
+            {
+                $user = User::where('email', '=', $data['email'])->first();
+            } else 
+            {
+                $user = Admin::where('username', '=', $data['username'])->first();
+            }
+            
 
             if(!isset($user)) 
             {
@@ -73,7 +80,7 @@ class AuthService
                 ];
             }
 
-            $token = JWTLib::createJWTToken($user->user_id);
+            $token = JWTLib::createJWTToken($mode === 'Admin' ? $user->admin_id : $user->user_id, $mode);
 
             return [
                 'code' => 200,
@@ -94,47 +101,4 @@ class AuthService
         }
     }
 
-    public function adminLogin(array $data)
-    {
-        try {
-            $admin = Admin::where('email', '=', $data['email'])->first();
-
-            if(!isset($admin)) 
-            {
-                return [
-                    'code' => 400,
-                    'status' => 'fail',
-                    'message' => 'invalid email or password'
-                ];
-            }
-
-            if (!password_verify($data['password'], $admin->password))
-            {
-                return [
-                    'code' => 400,
-                    'status' => 'fail',
-                    'message' => 'invalid email or password'
-                ];
-            }
-
-            $token = JWTLib::createJWTToken($admin->admin_id);
-
-            return [
-                'code' => 200,
-                'status' => 'success',
-                'message' => 'successfully login to system',
-                'data' => [
-                    'token' => $token
-                ]
-            ];
-
-        } catch (\Exception $e) {
-            error_log("[AUTH SERVICE][login] ERR: " . $e->getMessage());
-            return [
-                'code' => 500,
-                'status' => 'error',
-                'message' => 'internal server error'
-            ];
-        }        
-    }
 }

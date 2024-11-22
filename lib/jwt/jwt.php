@@ -7,7 +7,7 @@ use Firebase\JWT\Key;
 
 class JWTLib
 {
-    public static function createJWTToken(string $userId) {
+    public static function createJWTToken(string $userId, string $mode) {
         $secretKey = $_ENV["JWT_SECRET_KEY"];
         $issuedAt = time();
         $expiredAt = $issuedAt + (int)$_ENV["JWT_EXP_TIME"];
@@ -16,6 +16,7 @@ class JWTLib
             'iat' => $issuedAt,
             'exp' => $expiredAt,
             'userId' => $userId,
+            'iss' => $mode === 'Admin' ? $_ENV['JWT_ADMIN_ROLE'] : $_ENV['JWT_USER_ROLE']
         ];
     
         $token = JWT::encode($payload, $secretKey, "HS256");

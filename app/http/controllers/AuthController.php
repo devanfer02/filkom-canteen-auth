@@ -21,9 +21,9 @@ class AuthController
         HTTPResponse::send($resp['code'], $resp);
     }
 
-    public function login(array $data)
+    public function login(array $data, string $mode = 'User')
     {
-        $resp = $this->AuthService->login($data);
+        $resp = $this->AuthService->login($data, $mode);
 
         HTTPResponse::send($resp['code'], $resp);
     }
