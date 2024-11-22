@@ -1,0 +1,14 @@
+services:
+  filkom-proxy:
+    image: nginx:stable-alpine
+    container_name: filkom-proxy
+    volumes:
+      - ./deploy/nginx.conf:/etc/nginx/conf.d/default.conf
+    network_mode: host
+  filkom-auth:
+    build:
+      dockerfile: ./deploy/Dockerfile
+      context: .
+    container_name: filkom-auth
+    network_mode: host
+    restart: on-failure
