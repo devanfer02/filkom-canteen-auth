@@ -9,6 +9,6 @@ services:
     build:
       dockerfile: ./deploy/Dockerfile
       context: .
-    container_name: filkom-auth
+    container_name: filkom-auth 
     network_mode: host
     restart: on-failure

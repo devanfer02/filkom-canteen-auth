@@ -53,12 +53,13 @@ class AuthService
     public function login(array $data, string $mode) 
     {
         try {
+
             if ($mode === 'User')
             {
                 $user = User::where('email', '=', $data['email'])->first();
             } else 
             {
-                $user = Admin::where('username', '=', $data['username'])->first();
+                $user = Admin::with('role')->where('username', '=', $data['username'])->first();
             }
             
 
@@ -80,7 +81,11 @@ class AuthService
                 ];
             }
 
-            $token = JWTLib::createJWTToken($mode === 'Admin' ? $user->admin_id : $user->user_id, $mode);
+            $token = JWTLib::createJWTToken(
+                $mode === 'Admin' ? $user->admin_id : $user->user_id, 
+                $mode, 
+                $user->role->role_id ?? "User"
+            );
 
             return [
                 'code' => 200,
