@@ -17,7 +17,7 @@ class JWTLib
             'exp' => $expiredAt,
             'userId' => $userId,
             'iss' => $mode === 'Admin' ? $_ENV['JWT_ADMIN_ROLE'] : $_ENV['JWT_USER_ROLE'],
-            'role' => $mode === 'Admin' ? 'User' : $role,
+            'role' => $role,
         ];
     
         $token = JWT::encode($payload, $secretKey, "HS256");

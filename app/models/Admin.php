@@ -11,6 +11,8 @@ class Admin extends Model
 
     protected $primaryKey = 'admin_id';
 
+    protected $keyType = 'string';
+
     protected $fillable = ['email', 'password'];
 
     public function role(): BelongsTo 

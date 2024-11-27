@@ -13,6 +13,7 @@ require_once("app/services/AuthService.php");
 require_once("app/validations/AuthValidation.php");
 require_once("app/models/User.php");
 require_once("app/models/Admin.php");
+require_once("app/models/Role.php");
 
 require_once("lib/jwt/jwt.php");
 
