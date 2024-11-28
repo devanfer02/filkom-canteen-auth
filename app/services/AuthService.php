@@ -81,8 +81,6 @@ class AuthService
                 ];
             }
 
-            error_log("ROLE: " . $user->role->role_id);
-
             $token = JWTLib::createJWTToken(
                 $mode === 'Admin' ? $user->admin_id : $user->user_id, 
                 $mode, 
