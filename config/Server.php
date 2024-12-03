@@ -22,6 +22,10 @@ class Server
     public static function setup()
     {
         header("Content-Type: application/json");
+        header("Access-Control-Allow-Origin: *");
+        header("Access-Control-Allow-Methods: *");
+        header("Access-Control-Allow-Headers: *");
+
 
         $requestUri = urldecode(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
 
