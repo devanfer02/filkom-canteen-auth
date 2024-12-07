@@ -10,7 +10,13 @@
 </body>
 <script>
     async function fetchData() {
-        const res = await fetch("http://localhost:8000/health")
+        const res = await fetch("https://filkom-api.dvnnfrr.my.id/auth/login", {
+            method: 'POST',
+            body: JSON.stringify({
+                email: "devan@gmail.com",
+                password: "devan@gmail.com",
+            })
+        })
         const data = await res.json()
 
         document.getElementById("result").innerHTML = data
